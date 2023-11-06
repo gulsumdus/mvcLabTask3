@@ -1,0 +1,39 @@
+﻿@model MVClab3.Models.Employee
+
+@{
+    Layout = ViewBag.Layout;
+ 
+}
+<h1>Details</h1>
+<div>
+    <h4>Employee</h4>
+    <hr />
+   <table class="table">
+    <tr>
+        <td><strong>Name:</strong></td>
+        <td>@Model.Name</td>
+        <td rowspan="4" style="vertical-align: top;"><img src="@Model.Image" alt="Employee Image" width="150" height="150" /></td>
+    </tr>
+    <tr>
+        <td><strong>Surname:</strong></td>
+        <td>@Model.Surname</td>
+    </tr>
+    <tr>
+        <td><strong>Birth Date:</strong></td>
+        <td>@Model.BirthDate.ToShortDateString()</td>
+    </tr>
+    <tr>
+        <td><strong>Position:</strong></td>
+        <td>@Model.Position</td>
+    </tr>
+</table>
+</div>
+<div>
+    <hr />
+    @Html.Partial("Summary", Model)
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+
+</div>

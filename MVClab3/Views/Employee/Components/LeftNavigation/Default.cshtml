@@ -1,0 +1,10 @@
+﻿<ul class="nav flex-column">
+    @foreach (var link in Model)
+    {
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="@link.Controller" asp-action="@link.Action">
+                @link.Text
+            </a>
+        </li>
+    }
+</ul>
