@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\HAKAN DÜŞ\\OneDrive\\Masaüstü\\webPro_Asignments\\MVClab3\\MVClab3.csproj": {}
+    "C:\\Users\\HAKAN DÜŞ\\OneDrive\\Masaüstü\\github_project\\mvcLabTask3\\MVClab3\\MVClab3.csproj": {}
   },
   "projects": {
-    "C:\\Users\\HAKAN DÜŞ\\OneDrive\\Masaüstü\\webPro_Asignments\\MVClab3\\MVClab3.csproj": {
+    "C:\\Users\\HAKAN DÜŞ\\OneDrive\\Masaüstü\\github_project\\mvcLabTask3\\MVClab3\\MVClab3.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\HAKAN DÜŞ\\OneDrive\\Masaüstü\\webPro_Asignments\\MVClab3\\MVClab3.csproj",
+        "projectUniqueName": "C:\\Users\\HAKAN DÜŞ\\OneDrive\\Masaüstü\\github_project\\mvcLabTask3\\MVClab3\\MVClab3.csproj",
         "projectName": "MVClab3",
-        "projectPath": "C:\\Users\\HAKAN DÜŞ\\OneDrive\\Masaüstü\\webPro_Asignments\\MVClab3\\MVClab3.csproj",
+        "projectPath": "C:\\Users\\HAKAN DÜŞ\\OneDrive\\Masaüstü\\github_project\\mvcLabTask3\\MVClab3\\MVClab3.csproj",
         "packagesPath": "C:\\Users\\HAKAN DÜŞ\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\HAKAN DÜŞ\\OneDrive\\Masaüstü\\webPro_Asignments\\MVClab3\\obj\\",
+        "outputPath": "C:\\Users\\HAKAN DÜŞ\\OneDrive\\Masaüstü\\github_project\\mvcLabTask3\\MVClab3\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
