@@ -1,4 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using MVClab3.Models;
+
+
 var builder = WebApplication.CreateBuilder(args);
+///***********
+builder.Services.AddDbContext<EmployeeContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("EmployeeDB")));
+///**********
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

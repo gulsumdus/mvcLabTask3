@@ -1,120 +1,154 @@
 ﻿using MVClab3.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace MVClab3.Controllers
 {
     public class EmployeeController : Controller
     {
-        [BindProperty]
-        public Employee _employee { get; set; }
+        private readonly EmployeeContext _context;
 
-        List<Employee> employees = new();
-        public EmployeeController()
+        public EmployeeController(EmployeeContext context)
         {
-            employees = new List<Employee>
-            {
-                new Employee
-                {
-                 Id = 0, Name = "Martin", Surname = "Simpson",
-                 BirthDate = new DateTime(1992, 12, 3),
-                 Position = "Marketing Expert", Image="/images/Martin.jpg"
-                },
-                new Employee
-                {
-                 Id = 1, Name = "Jacob", Surname = "Hawk",
-                 BirthDate = new DateTime(1995, 10, 2), Position = "Manager", Image="/images/Jacob.jpg"
-                },
-                new Employee
-                {
-                 Id = 2, Name = "Elizabeth", Surname = "Geil",
-                 BirthDate = new DateTime(2000, 1, 7),
-                 Position = "Software Engineer", Image="/images/Elizabeth.jpg"
-                },
-                new Employee
-                {
-                Id = 3, Name = "Kate", Surname =  "Metain",
-                BirthDate = new DateTime(1997, 2, 13),
-                Position = "Admin", Image="/images/Kate.jpg"
-                },
-                new Employee
-                {
-                Id = 4, Name = "Michael", Surname = "Cook",
-                BirthDate = new DateTime(1990, 12, 25),
-                Position = "Marketing expert", Image="/images/Michael.jpg"
-                },
-                new Employee
-                {
-                Id = 5, Name = "John", Surname = "Snow",
-                BirthDate = new DateTime(2001, 7, 15),
-                Position = "Software Engineer", Image="/images/John.jpg"
-                },
-                new Employee
-                {
-                Id = 6, Name = "Nina", Surname = "Soprano",
-                BirthDate = new DateTime(1999, 9, 30),
-                Position = "Software Engineer", Image="/images/Nina.jpg"
-                },
-               new Employee
-               {
-               Id = 7, Name = "Tina", Surname = "Fins",
-               BirthDate = new DateTime(2000, 5, 14),
-               Position = "Team Leader", Image="/images/Tina.jpg"
-               }
-
-
-
-            };
+            _context = context;
         }
-        //Index
-        public IActionResult Index()
+
+        // GET: Employees
+        public async Task<IActionResult> Index()
         {
-            // Set the layout for this action
-            ViewBag.Layout = "_Lab2Layout";
+            List<Employee> employees = await _context.EmployeeTable.ToListAsync();
             return View(employees);
         }
-        //Details
-        public IActionResult Details(int id)
+
+        // GET: Kullanicis/Details/id
+        public async Task<IActionResult> Details(int? id)
         {
-            var employee = employees.FirstOrDefault(e => e.Id == id);
+            if (id == null || _context.EmployeeTable == null)
+            {
+                return NotFound();
+            }
+
+            var employee = await _context.EmployeeTable
+                .FirstOrDefaultAsync(m => m.Id == id);
             if (employee == null)
             {
-                return NotFound(); // Handle when the employee with the given ID is not found
-            }
-            // Set the layout for this action
-            else
-            {
-                ViewBag.Layout = "_Lab2Layout";
-                return View(employee);
-
+                return NotFound();
             }
 
-        }
-        public IActionResult Edit(int id)
-        {
-            var employee = employees.FirstOrDefault(m => m.Id == id);
             return View(employee);
         }
-        [Route("Employee/Edit/{id}")]
+        // GET: Employees/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        // POST: Employees/Create
         [HttpPost]
-        // Property Model Binding
-        public IActionResult Edit(int id, Employee employee)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,Name,Surname,BirthDate,Position,Image")] Employee employee)
         {
-            ModelState.AddModelError("Title", "This Title Already Exists.");
-            return View(_employee);
+            // if (ModelState.IsValid)
+            {
+                _context.Add(employee);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            // return View(employee);
         }
 
-        public IActionResult Update(int id)
+        // GET: Employees/Edit/id
+        public async Task<IActionResult> Edit(int? id)
         {
-            var employee = employees.FirstOrDefault(m => m.Id == id);
+            if (id == null || _context.EmployeeTable == null)
+            {
+                return NotFound();
+            }
+
+            var employee = await _context.EmployeeTable.FindAsync(id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
             return View(employee);
         }
-        [Route("Edit/Employee/{id}")]
-        [HttpGet]
-        public IActionResult Update(int id, Employee employee)
+
+        // POST: Employees/Edit/id
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Surname,BirthDate,Position,Image")] Employee employee)
         {
-            ModelState.AddModelError("Title", "This Title Already Exists.");
-            return View(_employee);
+            if (id != employee.Id)
+            {
+                return NotFound();
+            }
+
+            //if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(employee);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!EmployeeExists(employee.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            // return View(employee);
         }
 
+        // GET: Employees/Delete/id
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var employee = await _context.EmployeeTable.FirstOrDefaultAsync(m => m.Id == id);
+            if (employee == null)
+            {
+                return NotFound();
+            }
+
+            return View(employee);
+        }
+
+        // POST: Kullanicis/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            if (_context.EmployeeTable == null)
+            {
+                return Problem("Entity set 'YemekContext.KullaniciTable'  is null.");
+            }
+            var employee = await _context.EmployeeTable.FindAsync(id);
+            if (employee != null)
+            {
+                _context.EmployeeTable.Remove(employee);
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool EmployeeExists(int id)
+        {
+            return (_context.EmployeeTable?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
     }
 }

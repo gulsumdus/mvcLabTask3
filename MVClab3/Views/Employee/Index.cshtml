@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MVClab3.Models.Employee>
-@{
+@*@{
       Layout = ViewBag.Layout;
-}
+}*@
 <h1>Employees</h1>
 <p>
     @*<a asp-action="Create">Create New</a>*@
@@ -43,7 +43,7 @@
                 <td>
                     <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Update" asp-route-id="@item.Id">Update</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> |
                     
                    
                 </td>
@@ -51,6 +51,11 @@
         }
     </tbody>
 </table>
+<p>
+   <a asp-action="Create" class="CreateButton">
+   <button  asp-action="Create"  class="btn btn-primary">Add New Employee</button>
+  </a>
+</p>
 <style>
     /* Header background color */
     th {

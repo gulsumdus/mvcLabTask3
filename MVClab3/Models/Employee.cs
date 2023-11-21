@@ -21,6 +21,6 @@ namespace MVClab3.Models
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
 
-        public string Image { get; set; }
+        public string? Image { get; set; } // Nullable
     }
 }
