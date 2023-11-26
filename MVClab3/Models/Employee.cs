@@ -21,6 +21,13 @@ namespace MVClab3.Models
         [DataType(DataType.Date)]
         public DateTime BirthDate { get; set; }
 
+        public int CompanyId { get; set; }//FK
+
         public string? Image { get; set; } // Nullable
+
+        //-------------------Navigation property------------------------
+        public Company Company { get; set; } //1-M Rel.
+        public SalaryInfo SalaryInfo { get; set; }//1-1 Rel.
+
     }
 }

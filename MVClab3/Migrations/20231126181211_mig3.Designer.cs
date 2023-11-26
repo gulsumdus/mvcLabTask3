@@ -4,6 +4,7 @@ using MVClab3.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVClab3.Migrations
 {
     [DbContext(typeof(EmployeeContext))]
-    partial class EmployeeContextModelSnapshot : ModelSnapshot
+    [Migration("20231126181211_mig3")]
+    partial class mig3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -218,7 +221,10 @@ namespace MVClab3.Migrations
             modelBuilder.Entity("MVClab3.Models.SalaryInfo", b =>
                 {
                     b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<decimal>("Gross")
                         .HasColumnType("decimal(18,2)");
@@ -242,26 +248,9 @@ namespace MVClab3.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("MVClab3.Models.SalaryInfo", b =>
-                {
-                    b.HasOne("MVClab3.Models.Employee", "Employee")
-                        .WithOne("SalaryInfo")
-                        .HasForeignKey("MVClab3.Models.SalaryInfo", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Employee");
-                });
-
             modelBuilder.Entity("MVClab3.Models.Company", b =>
                 {
                     b.Navigation("Employees");
-                });
-
-            modelBuilder.Entity("MVClab3.Models.Employee", b =>
-                {
-                    b.Navigation("SalaryInfo")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

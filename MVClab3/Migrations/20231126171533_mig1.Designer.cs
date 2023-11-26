@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MVClab3.Migrations
 {
     [DbContext(typeof(EmployeeContext))]
-    [Migration("20231121210021_init")]
-    partial class init
+    [Migration("20231126171533_mig1")]
+    partial class mig1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,81 @@ namespace MVClab3.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("MVClab3.Models.Company", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Country")
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Zipcode")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CompanyTable");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            City = "Cupertino",
+                            Country = "USA",
+                            Name = "Apple",
+                            Zipcode = "43595"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            City = "Istanbul",
+                            Country = "TURKEY",
+                            Name = "Vestel",
+                            Zipcode = "51379"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            City = "Stokholm",
+                            Country = "SWEDEN",
+                            Name = "H&M",
+                            Zipcode = "16079"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            City = "London",
+                            Country = "UK",
+                            Name = "HSBC",
+                            Zipcode = "16905"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            City = "Hangzhou",
+                            Country = "CHINA",
+                            Name = "Alibaba Group",
+                            Zipcode = "17000"
+                        });
+                });
+
             modelBuilder.Entity("MVClab3.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -35,6 +110,9 @@ namespace MVClab3.Migrations
 
                     b.Property<DateTime>("BirthDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("CompanyId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -60,6 +138,7 @@ namespace MVClab3.Migrations
                         {
                             Id = 1,
                             BirthDate = new DateTime(1992, 12, 3, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CompanyId = 1,
                             Image = "/images/Martin.jpg",
                             Name = "Martin",
                             Position = "Marketing Expert",
@@ -69,6 +148,7 @@ namespace MVClab3.Migrations
                         {
                             Id = 2,
                             BirthDate = new DateTime(1995, 10, 2, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CompanyId = 1,
                             Image = "/images/Jacob.jpg",
                             Name = "Jacob",
                             Position = "Manager",
@@ -78,6 +158,7 @@ namespace MVClab3.Migrations
                         {
                             Id = 3,
                             BirthDate = new DateTime(2000, 1, 7, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CompanyId = 3,
                             Image = "/images/Elizabeth.jpg",
                             Name = "Elizabeth",
                             Position = "Software Engineer",
@@ -87,6 +168,7 @@ namespace MVClab3.Migrations
                         {
                             Id = 4,
                             BirthDate = new DateTime(1997, 2, 13, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CompanyId = 4,
                             Image = "/images/Kate.jpg",
                             Name = "Kate",
                             Position = "Admin",
@@ -96,6 +178,7 @@ namespace MVClab3.Migrations
                         {
                             Id = 5,
                             BirthDate = new DateTime(1990, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CompanyId = 2,
                             Image = "/images/Michael.jpg",
                             Name = "Michael",
                             Position = "Marketing expert",
@@ -105,6 +188,7 @@ namespace MVClab3.Migrations
                         {
                             Id = 6,
                             BirthDate = new DateTime(2001, 7, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CompanyId = 5,
                             Image = "/images/John.jpg",
                             Name = "John",
                             Position = "Software Engineer",
@@ -114,6 +198,7 @@ namespace MVClab3.Migrations
                         {
                             Id = 7,
                             BirthDate = new DateTime(1999, 9, 30, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CompanyId = 4,
                             Image = "/images/Nina.jpg",
                             Name = "Nina",
                             Position = "Software Engineer",
@@ -123,6 +208,7 @@ namespace MVClab3.Migrations
                         {
                             Id = 8,
                             BirthDate = new DateTime(2000, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            CompanyId = 2,
                             Image = "/images/Tina.jpg",
                             Name = "Tina",
                             Position = "Team Leader",
